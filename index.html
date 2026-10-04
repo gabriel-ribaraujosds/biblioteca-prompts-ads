@@ -1,0 +1,353 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="27 prompts prontos para alunos de ADS estudarem com IA.">
+<title>Biblioteca de Prompts ADS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Sans:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+html{-webkit-text-size-adjust:100%}body{margin:0}img{max-width:100%}[hidden]{display:none!important}
+
+/* Layout: caderno de estudos — cabeçalho curto, faixa da anatomia do prompt, filtros fixos, coluna única de fichas com o prompt em fonte mono */
+:root{
+  --bg:#F5F7FB;
+  --surface:#FFFFFF;
+  --fg:#16203A;
+  --muted:#5A6684;
+  --line:#DCE2EE;
+  --accent:#2747C7;
+  --accent-soft:#E6EBFB;
+  --mark-bg:#FFE9A8;
+  --mark-fg:#5A3D00;
+  --prompt-bg:#F0F3F9;
+  --display:"Bricolage Grotesque", "Segoe UI", system-ui, sans-serif;
+  --body:"IBM Plex Sans", "Segoe UI", system-ui, sans-serif;
+  --mono:"IBM Plex Mono", ui-monospace, "SFMono-Regular", Menlo, Consolas, monospace;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0F1424;--surface:#171E33;--fg:#E7ECF7;--muted:#9AA6C3;--line:#2A3452;
+    --accent:#8FA6FF;--accent-soft:#232E55;--mark-bg:#4A3A0E;--mark-fg:#FFE3A1;--prompt-bg:#121931;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0F1424;--surface:#171E33;--fg:#E7ECF7;--muted:#9AA6C3;--line:#2A3452;
+  --accent:#8FA6FF;--accent-soft:#232E55;--mark-bg:#4A3A0E;--mark-fg:#FFE3A1;--prompt-bg:#121931;
+  color-scheme:dark;
+}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:16px;line-height:1.55;padding-inline:16px;padding-block:0 48px}
+.wrap{max-width:820px;margin-inline:auto}
+header{padding-block:40px 20px;display:grid;gap:12px}
+.eyebrow{font-size:12px;letter-spacing:.12em;text-transform:uppercase;color:var(--accent);font-weight:600;margin:0}
+h1{font-family:var(--display);font-weight:800;font-size:clamp(2rem,6vw,3.1rem);line-height:1.05;margin:0;text-wrap:balance;letter-spacing:-.01em}
+.lede{color:var(--muted);margin:0;max-width:62ch}
+.anatomy{display:grid;gap:10px;background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;margin-block:8px 4px}
+.anatomy h2{font-family:var(--display);font-size:1.05rem;margin:0;font-weight:600}
+.parts{display:flex;flex-wrap:wrap;gap:8px;margin:0;padding:0;list-style:none}
+.parts li{font-size:14px;background:var(--accent-soft);color:var(--fg);border-radius:999px;padding:4px 12px}
+.parts b{color:var(--accent)}
+.howto{font-size:14px;color:var(--muted);margin:0}
+.howto mark{background:var(--mark-bg);color:var(--mark-fg);font-family:var(--mono);font-size:13px;padding:0 4px;border-radius:3px}
+.controls{position:sticky;top:env(safe-area-inset-top,0px);z-index:5;background:var(--bg);padding-block:14px 12px;display:grid;gap:10px;border-bottom:1px solid var(--line)}
+.search{width:100%;font:inherit;font-size:16px;padding:10px 14px;border-radius:10px;border:1px solid var(--line);background:var(--surface);color:var(--fg)}
+.search:focus-visible,.chip:focus-visible,.copy:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.chips{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;scrollbar-width:none}
+.chips::-webkit-scrollbar{display:none}
+.chip{flex:none;font:inherit;font-size:14px;border:1px solid var(--line);background:var(--surface);color:var(--fg);border-radius:999px;padding:6px 12px;cursor:pointer;white-space:nowrap}
+.chip .n{color:var(--muted);font-variant-numeric:tabular-nums;margin-left:4px}
+.chip[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--surface)}
+.chip[aria-pressed="true"] .n{color:inherit;opacity:.8}
+main{display:grid;gap:28px;padding-top:20px}
+.group{display:grid;gap:12px}
+.group h2{font-family:var(--display);font-weight:600;font-size:1.35rem;margin:0}
+.group > p{margin:-6px 0 0;color:var(--muted);font-size:15px}
+.card{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:16px;display:grid;gap:10px;min-width:0}
+.card.featured{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent)}
+.card-head{display:flex;justify-content:space-between;align-items:flex-start;gap:12px}
+.card h3{font-size:1.05rem;margin:0;font-weight:600;line-height:1.3}
+.when{margin:2px 0 0;font-size:14px;color:var(--muted)}
+.copy{flex:none;font:inherit;font-size:14px;font-weight:500;border:1px solid var(--accent);color:var(--accent);background:transparent;border-radius:8px;padding:6px 12px;cursor:pointer}
+.copy:hover{background:var(--accent-soft)}
+.copy.done{background:var(--accent);color:var(--surface)}
+.prompt{margin:0;font-family:var(--mono);font-size:13.5px;line-height:1.6;background:var(--prompt-bg);border-radius:8px;padding:12px 14px;white-space:pre-wrap;word-break:break-word;min-width:0}
+.prompt mark{background:var(--mark-bg);color:var(--mark-fg);padding:0 3px;border-radius:3px}
+.empty{color:var(--muted);text-align:center;padding:32px 0}
+footer{margin-top:40px;padding-top:20px;border-top:1px solid var(--line);color:var(--muted);font-size:14px;display:grid;gap:8px}
+footer strong{color:var(--fg)}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--fg);color:var(--bg);padding:10px 16px;border-radius:999px;font-size:14px;opacity:0;pointer-events:none;transition:opacity .2s}
+.toast.show{opacity:1}
+@media (prefers-reduced-motion:reduce){.toast{transition:none}}
+</style>
+
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <p class="eyebrow">Bônus da palestra · IA: de onde veio, onde está e para onde leva a sua carreira</p>
+    <h1>Biblioteca de Prompts para estudar ADS</h1>
+    <p class="lede">Prompts prontos para usar a IA como parceira de estudo: entender a matéria, praticar, programar melhor e preparar sua carreira. Funcionam no Claude, ChatGPT, Gemini ou Copilot.</p>
+    <section class="anatomy" aria-label="Anatomia de um bom prompt">
+      <h2>Anatomia de um bom prompt</h2>
+      <ul class="parts">
+        <li><b>Papel</b> quem a IA deve ser</li>
+        <li><b>Contexto</b> sua situação</li>
+        <li><b>Tarefa</b> o que fazer</li>
+        <li><b>Formato</b> como responder</li>
+        <li><b>Restrições</b> o que evitar</li>
+      </ul>
+      <p class="howto">Como usar: copie o prompt e troque tudo que estiver <mark>[ENTRE COLCHETES]</mark> pelas suas informações.</p>
+    </section>
+  </header>
+
+  <div class="controls">
+    <label for="q" class="eyebrow" style="position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)">Buscar prompt</label>
+    <input id="q" class="search" type="search" placeholder="Buscar: SQL, entrevista, erro, prova…" autocomplete="off">
+    <div class="chips" id="chips" role="toolbar" aria-label="Filtrar por categoria"></div>
+  </div>
+
+  <main id="list" aria-live="polite"></main>
+
+  <footer>
+    <p><strong>Use a IA para aprender, não para pular o aprendizado.</strong> Peça explicações, dicas e correções. Se ela fizer o trabalho todo por você, quem fica para trás é você.</p>
+    <p>A IA erra. Confira respostas importantes, rode o código e desconfie de informações que parecem boas demais.</p>
+    <p>Nunca cole senhas, dados pessoais de terceiros ou informações sigilosas da empresa em uma IA.</p>
+    <p>Gostou? Crie seu próprio prompt, teste e compartilhe com a turma.</p>
+  </footer>
+</div>
+<div class="toast" id="toast" role="status"></div>
+
+<script>
+const CATS = [
+  {id:"entender", nome:"Entender a matéria", desc:"Para quando o conteúdo não entrou de primeira."},
+  {id:"praticar", nome:"Praticar", desc:"Exercícios sob medida, com correção."},
+  {id:"programar", nome:"Programar melhor", desc:"Depurar, revisar e testar seu código."},
+  {id:"banco", nome:"Banco de dados", desc:"Modelagem, SQL e normalização."},
+  {id:"projetos", nome:"Projetos", desc:"Do zero ao portfólio no GitHub."},
+  {id:"carreira", nome:"Carreira", desc:"Currículo, LinkedIn e entrevistas."},
+  {id:"metodo", nome:"Estudar com método", desc:"Planejar, revisar e se preparar para a prova."}
+];
+
+const PROMPTS = [
+  {cat:"entender", featured:true, titulo:"Professor particular", quando:"Use no começo de qualquer sessão de estudo. A IA passa a ensinar por perguntas, sem entregar respostas prontas.",
+   texto:`Atue como meu professor particular de [DISCIPLINA] no curso de Análise e Desenvolvimento de Sistemas. Estou no [Nº] semestre e meu nível nesse assunto é [INICIANTE / INTERMEDIÁRIO].
+
+Regras da nossa aula:
+1. Ensine um conceito por vez, com exemplos curtos.
+2. Depois de cada explicação, me faça uma pergunta para checar se entendi.
+3. Se eu errar, não dê a resposta: me dê uma dica e deixe eu tentar de novo.
+4. Use analogias do dia a dia sempre que possível.
+5. A cada 3 conceitos, faça um mini resumo.
+
+Hoje quero aprender: [ASSUNTO].`},
+  {cat:"entender", titulo:"Explique como se eu fosse iniciante", quando:"Para conceitos que parecem abstratos demais.",
+   texto:`Explique [CONCEITO] para um aluno de ADS que está vendo isso pela primeira vez.
+
+Estrutura da resposta:
+1. Uma analogia com algo do dia a dia.
+2. A definição técnica em no máximo 3 frases.
+3. Um exemplo prático em [LINGUAGEM].
+4. Os 2 erros mais comuns de quem está aprendendo.
+5. Três perguntas para eu testar se entendi (sem as respostas).`},
+  {cat:"entender", titulo:"Explique este código linha a linha", quando:"Para entender código do professor, de um tutorial ou de um colega.",
+   texto:`Explique o código abaixo linha a linha, como se estivesse ensinando um colega de turma. Para cada trecho, diga o que ele faz e por que foi escrito assim. No final, resuma em 2 frases o objetivo do código e aponte qualquer coisa que poderia ser melhorada.
+
+Linguagem: [LINGUAGEM]
+Código:
+[COLE O CÓDIGO AQUI]`},
+  {cat:"entender", titulo:"Avalie a minha explicação", quando:"Técnica Feynman: se você consegue explicar, você entendeu.",
+   texto:`Vou explicar com minhas palavras o que entendi sobre [CONCEITO]. Avalie minha explicação como um professor exigente, mas gentil:
+- O que está correto
+- O que está errado ou incompleto
+- Uma pergunta que revele se ainda tenho alguma lacuna
+
+Não reescreva a explicação inteira por mim.
+
+Minha explicação: [ESCREVA SUA EXPLICAÇÃO]`},
+  {cat:"entender", titulo:"Compare dois conceitos", quando:"Para assuntos que vivem se confundindo.",
+   texto:`Compare [CONCEITO A] e [CONCEITO B] em uma tabela com as colunas: o que é, quando usar, vantagens, desvantagens e exemplo em [LINGUAGEM]. Depois, me dê uma regra prática de uma frase para eu nunca mais confundir os dois.`},
+
+  {cat:"praticar", titulo:"Lista de exercícios com gabarito", quando:"Para treinar antes de prova ou trabalho.",
+   texto:`Crie uma lista com [QUANTIDADE] exercícios sobre [ASSUNTO] em [LINGUAGEM], em ordem crescente de dificuldade (fácil, médio, difícil).
+
+Para cada exercício, informe o que ele treina. Coloque o gabarito comentado só no final, depois de uma linha escrita "GABARITO", para eu tentar resolver antes de olhar.`},
+  {cat:"praticar", titulo:"Desafio com dicas progressivas", quando:"Para treinar lógica sem cair na tentação de ver a resposta.",
+   texto:`Me dê um problema de lógica de programação de nível [FÁCIL / MÉDIO / DIFÍCIL] sobre [ASSUNTO, ex.: laços, vetores, recursão].
+
+Não mostre a solução. Quando eu escrever "dica", me dê dicas em 3 níveis, da mais sutil à mais direta, uma por vez. Só mostre a solução completa se eu escrever "desisto".`},
+  {cat:"praticar", titulo:"Corrija meu exercício", quando:"Depois de resolver, para receber feedback de verdade.",
+   texto:`Resolvi o exercício abaixo. Corrija como um professor faria:
+1. Minha solução está correta? Teste com 3 entradas diferentes, incluindo um caso extremo.
+2. Que nota de 0 a 10 você daria e por quê?
+3. O que posso melhorar em legibilidade e eficiência?
+
+Não reescreva tudo: aponte os trechos e me deixe corrigir.
+
+Enunciado: [COLE O ENUNCIADO]
+Minha solução: [COLE SEU CÓDIGO]`},
+
+  {cat:"programar", titulo:"Me ajude a entender este erro", quando:"Quando o terminal fica vermelho e você não sabe por onde começar.",
+   texto:`Estou recebendo este erro em [LINGUAGEM / FRAMEWORK]:
+
+[COLE A MENSAGEM DE ERRO]
+
+Código relacionado:
+[COLE O TRECHO DO CÓDIGO]
+
+Explique em linguagem simples o que o erro significa e qual a causa provável. Me guie com perguntas e dicas para eu mesmo encontrar a correção. Só mostre o código corrigido se eu pedir.`},
+  {cat:"programar", titulo:"Code review de dev sênior", quando:"Antes de entregar um trabalho ou abrir um pull request.",
+   texto:`Atue como um desenvolvedor sênior fazendo code review do código abaixo. Avalie: legibilidade, nomes de variáveis e funções, possíveis bugs, segurança, desempenho e boas práticas de [LINGUAGEM].
+
+Organize os comentários por prioridade (crítico, importante, sugestão) e explique o porquê de cada um, para eu aprender e não só corrigir.
+
+[COLE O CÓDIGO]`},
+  {cat:"programar", titulo:"Escreva testes para o meu código", quando:"Para aprender testes automatizados na prática.",
+   texto:`Escreva testes unitários para a função abaixo usando [FERRAMENTA, ex.: pytest, JUnit, Jest]. Inclua casos normais, casos extremos e casos de erro. Comente cada teste explicando o que ele garante. Depois me diga se algum teste revelou um problema na função.
+
+[COLE A FUNÇÃO]`},
+  {cat:"programar", titulo:"Refatore com explicação", quando:"Para transformar código que funciona em código bom.",
+   texto:`Refatore o código abaixo aplicando boas práticas de código limpo, sem mudar o comportamento. Mostre a versão nova e, em seguida, uma lista com cada mudança feita e o motivo. Use [LINGUAGEM] e mantenha o nível adequado para um aluno do [Nº] semestre.
+
+[COLE O CÓDIGO]`},
+
+  {cat:"banco", titulo:"Modele um banco de dados comigo", quando:"Para trabalhos e projetos que precisam de um banco do zero.",
+   texto:`Quero modelar um banco de dados para [DESCREVA O SISTEMA, ex.: uma clínica veterinária].
+
+Antes de propor qualquer coisa, me faça até 5 perguntas sobre os requisitos. Depois das minhas respostas:
+1. Liste as entidades, atributos e chaves.
+2. Descreva os relacionamentos e as cardinalidades.
+3. Gere o script SQL (CREATE TABLE) para [MySQL / PostgreSQL / SQL Server].
+4. Explique as decisões de modelagem mais importantes.`},
+  {cat:"banco", titulo:"Treino de SQL com base fictícia", quando:"Para praticar consultas sem precisar de um banco real.",
+   texto:`Crie uma base de dados fictícia sobre [TEMA, ex.: uma loja de games] com 3 a 4 tabelas relacionadas e cerca de 10 registros em cada (scripts CREATE TABLE e INSERT).
+
+Depois, me proponha 10 desafios de consulta em ordem de dificuldade, começando com SELECT simples e terminando com JOIN, GROUP BY, HAVING e subconsultas. Não mostre as respostas. Corrija cada consulta que eu enviar.`},
+  {cat:"banco", titulo:"Explique e otimize esta consulta", quando:"Para entender um SQL grande ou lento.",
+   texto:`Explique passo a passo o que a consulta SQL abaixo faz, na ordem em que o banco executa cada parte. Depois aponte possíveis problemas de desempenho e sugira melhorias, como índices ou reescrita, explicando o porquê.
+
+Banco: [MySQL / PostgreSQL / SQL Server]
+Consulta:
+[COLE A CONSULTA]`},
+  {cat:"banco", titulo:"Normalize esta tabela", quando:"Para entender 1FN, 2FN e 3FN de verdade.",
+   texto:`Analise a tabela abaixo e leve-a até a Terceira Forma Normal (3FN). Mostre o resultado de cada etapa (1FN, 2FN, 3FN) e explique qual problema cada etapa resolve, com exemplos de anomalias de inserção, atualização ou exclusão.
+
+[COLE A TABELA OU DESCREVA AS COLUNAS]`},
+
+  {cat:"projetos", titulo:"Ideias de projeto para portfólio", quando:"Quando você quer começar um portfólio e não sabe o que fazer.",
+   texto:`Sou aluno do [Nº] semestre de ADS. Sei [TECNOLOGIAS QUE CONHECE] e me interesso por [ÁREA OU HOBBY]. Quero trabalhar como [CARGO DESEJADO, ex.: dev back-end júnior].
+
+Sugira 5 ideias de projetos de portfólio que resolvam problemas reais. Para cada um: descrição em 2 frases, tecnologias, nível de dificuldade, tempo estimado e o que ele mostra para um recrutador.`},
+  {cat:"projetos", titulo:"Planeje meu projeto", quando:"Para tirar o projeto da cabeça e transformar em tarefas.",
+   texto:`Atue como um tech lead me ajudando a planejar o projeto [NOME E DESCRIÇÃO DO PROJETO]. Tenho [HORAS POR SEMANA] horas por semana e prazo de [PRAZO].
+
+Monte:
+1. Requisitos funcionais e não funcionais.
+2. O MVP (a menor versão útil).
+3. Uma lista de tarefas dividida em semanas.
+4. A arquitetura e as tecnologias sugeridas, com justificativa.
+5. Os 3 maiores riscos e como evitar cada um.`},
+  {cat:"projetos", titulo:"README profissional", quando:"Para deixar seus repositórios no GitHub com cara de profissional.",
+   texto:`Escreva um README.md profissional para o meu projeto no GitHub. Inclua: título, descrição curta, funcionalidades, tecnologias usadas, como instalar e rodar, prints (deixe marcações onde eu devo inserir as imagens), próximos passos e autor.
+
+Informações do projeto: [DESCREVA O PROJETO, TECNOLOGIAS E COMO RODAR]`},
+  {cat:"projetos", titulo:"Me salve no Git", quando:"Para aquele momento em que o Git parece um labirinto.",
+   texto:`Estou usando Git e preciso [DESCREVA O QUE QUER FAZER, ex.: desfazer o último commit sem perder minhas alterações].
+
+Me diga o comando exato, explique o que cada parte dele faz e me avise se existe algum risco de perder trabalho. Se houver mais de um jeito, compare as opções.`},
+
+  {cat:"carreira", titulo:"Simulação de entrevista técnica", quando:"Para treinar antes de um processo seletivo.",
+   texto:`Atue como recrutador técnico entrevistando um candidato para a vaga de [CARGO, ex.: estagiário de desenvolvimento] que pede [TECNOLOGIAS DA VAGA].
+
+Faça uma pergunta por vez, misturando perguntas técnicas e comportamentais. Espere minha resposta antes de seguir. Depois de cada resposta, dê uma nota de 0 a 10 e diga como eu poderia responder melhor. Ao final de 6 perguntas, faça um resumo dos meus pontos fortes e do que preciso estudar.`},
+  {cat:"carreira", titulo:"Compare meu perfil com uma vaga", quando:"Para saber o que estudar para conseguir a vaga que você quer.",
+   texto:`Abaixo está uma vaga que me interessa e um resumo do meu perfil. Faça uma análise honesta:
+1. Requisitos que eu já atendo.
+2. Requisitos que me faltam, em ordem de importância.
+3. Um plano de estudos de 30 dias para diminuir essa distância.
+4. Um projeto pequeno que eu possa fazer para provar essas habilidades.
+
+Vaga: [COLE A DESCRIÇÃO DA VAGA]
+Meu perfil: [SEU SEMESTRE, TECNOLOGIAS, PROJETOS E EXPERIÊNCIAS]`},
+  {cat:"carreira", titulo:"Revise meu currículo", quando:"Antes de enviar o currículo para qualquer vaga.",
+   texto:`Revise meu currículo para a vaga de [CARGO]. Aponte o que está fraco, o que está faltando e o que pode ser removido. Reescreva as experiências e projetos usando verbos de ação e resultados concretos. Não invente informações: se faltar algum dado, me pergunte.
+
+[COLE O TEXTO DO SEU CURRÍCULO]`},
+  {cat:"carreira", titulo:"Seção Sobre do LinkedIn", quando:"Para um perfil que chama a atenção de recrutadores.",
+   texto:`Escreva 3 versões da seção "Sobre" do meu LinkedIn, com até 1.200 caracteres cada: uma mais formal, uma mais direta e uma mais pessoal. Use primeira pessoa, destaque meus projetos e deixe claro o tipo de oportunidade que eu busco.
+
+Sobre mim: [CURSO E SEMESTRE, TECNOLOGIAS, PROJETOS, OBJETIVO PROFISSIONAL, UM HOBBY]`},
+
+  {cat:"metodo", titulo:"Plano de estudos semanal", quando:"Para organizar a rotina entre trabalho, faculdade e vida.",
+   texto:`Monte um plano de estudos semanal para mim. Tenho [HORAS] horas livres por semana, distribuídas assim: [DIAS E HORÁRIOS DISPONÍVEIS]. Estou cursando: [DISCIPLINAS]. Minha maior dificuldade é [DISCIPLINA OU ASSUNTO] e minha próxima prova é em [DATA].
+
+Use blocos de estudo curtos com pausas, inclua revisão e prática e reserve um tempo para descanso. Apresente em formato de tabela.`},
+  {cat:"metodo", titulo:"Flashcards para revisar", quando:"Para memorizar conceitos, comandos e definições.",
+   texto:`Crie [QUANTIDADE] flashcards sobre [ASSUNTO] no formato "Pergunta | Resposta", com respostas de no máximo 2 linhas. Misture perguntas de definição, de aplicação prática e de "qual a diferença entre". Depois, me faça as perguntas uma por vez, em ordem aleatória, e marque quais eu acertei.`},
+  {cat:"metodo", titulo:"Simulado para a prova", quando:"Uma semana antes da prova.",
+   texto:`Crie um simulado de [DISCIPLINA] com [QUANTIDADE] questões sobre os assuntos: [LISTE OS ASSUNTOS]. Use o estilo de prova [OBJETIVA / DISCURSIVA / MISTA] e nível de dificuldade de faculdade.
+
+Aplique uma questão por vez e espere minha resposta. No final, mostre minha nota, explique cada erro e me diga quais assuntos revisar primeiro.`},
+  {cat:"metodo", titulo:"Resumo de aula ou texto", quando:"Para transformar material longo em algo revisável.",
+   texto:`Resuma o conteúdo abaixo para estudo. Estruture assim:
+1. Ideia central em 1 frase.
+2. Principais conceitos, com uma explicação curta de cada.
+3. Um mapa mental em formato de tópicos.
+4. Cinco perguntas que poderiam cair na prova.
+
+Conteúdo: [COLE O TEXTO, TRANSCRIÇÃO OU SUAS ANOTAÇÕES]`}
+];
+
+const state = {cat:"todos", q:""};
+const $list = document.getElementById("list");
+const $chips = document.getElementById("chips");
+const $q = document.getElementById("q");
+const $toast = document.getElementById("toast");
+
+function esc(s){return s.replace(/[&<>"]/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]))}
+function hl(s){return esc(s).replace(/\[([^\]]+)\]/g,'<mark>[$1]</mark>')}
+function norm(s){return s.normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase()}
+
+function renderChips(){
+  const all = [{id:"todos",nome:"Todos",n:PROMPTS.length}].concat(CATS.map(c=>({id:c.id,nome:c.nome,n:PROMPTS.filter(p=>p.cat===c.id).length})));
+  $chips.innerHTML = all.map(c=>`<button class="chip" type="button" data-cat="${c.id}" aria-pressed="${state.cat===c.id}">${esc(c.nome)}<span class="n">${c.n}</span></button>`).join("");
+}
+
+function render(){
+  const q = norm(state.q.trim());
+  let html = "", total = 0;
+  CATS.forEach(c=>{
+    if(state.cat!=="todos" && state.cat!==c.id) return;
+    const items = PROMPTS.map((p,i)=>({...p,i})).filter(p=>p.cat===c.id && (!q || norm(p.titulo+" "+p.quando+" "+p.texto).includes(q)));
+    if(!items.length) return;
+    total += items.length;
+    html += `<section class="group"><h2>${esc(c.nome)}</h2><p>${esc(c.desc)}</p>` +
+      items.map(p=>`<article class="card${p.featured?" featured":""}">
+        <div class="card-head"><div><h3>${p.featured?"Destaque · ":""}${esc(p.titulo)}</h3><p class="when">${esc(p.quando)}</p></div>
+        <button class="copy" type="button" data-i="${p.i}">Copiar</button></div>
+        <pre class="prompt" id="p${p.i}">${hl(p.texto)}</pre></article>`).join("") + `</section>`;
+  });
+  $list.innerHTML = total ? html : `<p class="empty">Nenhum prompt encontrado para “${esc(state.q)}”. Tente outra palavra ou escolha “Todos”.</p>`;
+}
+
+let t;
+function toast(msg){$toast.textContent=msg;$toast.classList.add("show");clearTimeout(t);t=setTimeout(()=>$toast.classList.remove("show"),1800)}
+
+$chips.addEventListener("click",e=>{const b=e.target.closest(".chip");if(!b)return;state.cat=b.dataset.cat;renderChips();render();});
+$q.addEventListener("input",()=>{state.q=$q.value;render();});
+$list.addEventListener("click",e=>{
+  const b=e.target.closest(".copy"); if(!b) return;
+  const i=+b.dataset.i, text=PROMPTS[i].texto;
+  const ok=()=>{b.textContent="Copiado";b.classList.add("done");toast("Prompt copiado. Agora troque o que está entre colchetes.");setTimeout(()=>{b.textContent="Copiar";b.classList.remove("done")},2000)};
+  const fallback=()=>{const pre=document.getElementById("p"+i);const r=document.createRange();r.selectNodeContents(pre);const s=getSelection();s.removeAllRanges();s.addRange(r);toast("Texto selecionado. Use Ctrl+C ou o menu Copiar.")};
+  try{navigator.clipboard.writeText(text).then(ok,fallback)}catch(err){fallback()}
+});
+
+renderChips(); render();
+</script>
+
+</body>
+</html>
