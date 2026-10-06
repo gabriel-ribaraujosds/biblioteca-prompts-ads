@@ -1,0 +1,14 @@
+Crie a página de portfólio da pessoa abaixo em um novo arquivo chamado portfolio-[nome].html. Use a mesma estrutura de seções do index.html (Início, Sobre mim, Habilidades, Projetos e Contato), mas com uma identidade visual própria inspirada no hobby dela: cores, ícones e detalhes que lembrem esse hobby.
+
+Nome: João Silveira
+Curso: 2 semestre de Análise e Desenvolvimento de Sistemas na Anhanguera
+Habilidades: SQL, JAVA, C, C#
+Hobby: Jogar online
+
+Na seção Início, escreva uma frase de apresentação criativa que combine o hobby com tecnologia.
+Na seção Sobre mim, escreva um parágrafo curto, em primeira pessoa, de alguém que está estudando ADS e quer crescer na área.
+Na seção Habilidades, crie um card para cada habilidade, com uma frase sobre como ela é usada na prática.
+Na seção Projetos, sugira 3 ideias de projetos que essa pessoa poderia construir unindo as habilidades dela ao hobby, todos marcados como "em breve".
+Na seção Contato, coloque botões de LinkedIn e GitHub sem link real (href="#").
+
+Restrições: arquivo único com HTML, CSS e JavaScript juntos, sem bibliotecas externas nem imagens da internet, textos em português, layout adaptado para celular e código comentado.
